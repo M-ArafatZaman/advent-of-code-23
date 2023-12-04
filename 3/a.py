@@ -23,25 +23,13 @@ def getNum(r, c, nums):
     nums.append(int(num))
 
 nums = []
+grid = {(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)}
 for r in range(len(m)):
     for c in range(len(m[0])):
         if m[r][c] == "." or m[r][c].isdigit(): continue
 
-        if c-1 >= 0:
-            getNum(r, c-1, nums)
-        if c+1 < len(m[0]):
-            getNum(r, c+1, nums)
-        if r-1 >= 0:
-            getNum(r-1, c, nums)
-        if r+1 < len(m):
-            getNum(r+1, c, nums)
-        if c-1 >= 0 and r-1 >= 0:
-            getNum(r-1, c-1, nums)
-        if c+1 < len(m[0]) and r-1 >= 0:
-            getNum(r-1, c+1, nums)
-        if c-1 >= 0 and r+1 < len(m):
-            getNum(r+1, c-1, nums)
-        if c+1 < len(m[0]) and r+1 < len(m):
-            getNum(r+1, c+1, nums)
+        for dr, dc in grid:
+            if (r + dr) >= 0 and (r + dr) < len(m) and (c+dc) >= 0 and (c+dc) < len(m[0]):
+                getNum(r+dr, c+dc, nums)
 
 print(sum(nums))
