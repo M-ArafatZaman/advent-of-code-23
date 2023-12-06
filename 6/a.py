@@ -6,7 +6,6 @@ dist = [int(j) for j in a[1].split(":")[1].strip().split(" ") if j != ""]
 
 s = 1
 for i in range(len(time)):
-    # lt
     lt, gt = None, None
     low_speed, high_speed = 0, time[i]
     low_achieved_dist, high_achieved_dist = 0, 0
