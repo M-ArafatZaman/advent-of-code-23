@@ -1,15 +1,3 @@
-data = input().split(",")
-
-def hsh(s) -> int:
-    curr = 0
-    for i in s:
-        curr += ord(i)
-        curr *= 17
-        curr = curr % 256
-
-    return curr
-
-s = 0
-for i in data:
-    s += hsh(i)
-print(s) 
+from functools import reduce
+data = list(map(lambda s: reduce(lambda curr, v: (17*(curr+ord(v))) % 256, list(s), 0), input().split(",")))
+print(sum(data))
