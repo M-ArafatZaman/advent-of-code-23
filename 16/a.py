@@ -1,5 +1,6 @@
 import sys
 from collections import deque 
+import numpy as np
 
 # {(from): (to)}
 mirror = {
@@ -36,8 +37,7 @@ splitter = {
 def main():
     data = [list(i.strip()) for i in sys.stdin.readlines()]
     new_grid = [['.'] * len(data[0]) for _ in data]
-    horz_visited = [[False] * len(data[0]) for _ in data]
-    vert_visited = [[False] * len(data[0]) for _ in data]
+    visited = [[[] for j in data[0]] for _ in data]
 
     # ((r, c), (dr, dc))
     q = deque()
@@ -50,23 +50,8 @@ def main():
         dv = []
         # Check visited
         if data[r][c] != ".":
-            if data[r][c] in mirror:
-                # Horizontal movement
-                if dr == 0 and vert_visited[r][c]: continue
-            
-                # Vertical movement
-                if dc == 0 and horz_visited[r][c]: continue
-
-            if data[r][c] in splitter:
-                # Horizontal movement
-                if dr == 0 and horz_visited[r][c]: continue
-                # Vertical movement
-                if dc == 0 and vert_visited[r][c]: continue
-
-            if dr == 0:
-                horz_visited[r][c] = True
-            elif dc == 0:
-                vert_visited[r][c] = True
+            if (dr, dc) in visited[r][c]: continue
+            visited[r][c].append((dr, dc))
 
         # Get next state
         if data[r][c] in mirror:
